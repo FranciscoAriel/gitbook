@@ -1,4 +1,4 @@
 # Table of contents
 
-* [Página de prueba](README.md)
+* [Propiedades deseables de los estimadores](README.md)
 
