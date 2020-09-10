@@ -13,7 +13,7 @@ Para usar el lenguaje SQL en SAS, se debe llamar el procedimiento y se termina c
 
 > `PROC SQL;`
 >
->    `sentencias sql`
+>    _`sentencias sql`_
 >
 > `QUIT;`
 
@@ -28,17 +28,11 @@ Para elegir una o más variables, se deben nombrar las columnas de la tabla que 
 
 La sentencia SELECT más simple es la siguiente:
 
+> `SELECT` **`objeto-1`** _`<, objeto-2,...>`_ `FROM` **`tabla`** `;`
 
-> `PROC SQL;`
->
-> `SELECT objeto-1 <, objeto-2,...> FROM tabla;`
->
-> `QUIT;`
+donde **`objeto-1`** representa el nombre de una variable o el símbolo `*` y **`tabla`** representa el nombre de la tabla de donde se hará la consulta.
 
-
-donde `obejeto-1` representa el nombre de una variable o el símbolo `*` y `tabla` representa el nombre de la tabla de donde se hará la consulta.
-
-Por ejemplo el siguiente código seleccionaria todas las columnas y observaciones de la tabla `sashelp.class`.
+Por ejemplo el siguiente código seleccionaría todas las columnas y observaciones de la tabla `sashelp.class`.
 
 ````sas
 PROC SQL;
@@ -47,7 +41,7 @@ PROC SQL;
 QUIT;
 ````
 
-Mientras que si solo se desea obtener la variable **name** y **sex**, se usa el siguiente código.
+Mientras que si solo se desea obtener las variables **name** y **sex**, se usa el siguiente código.
 
 ````sas
 PROC SQL;
@@ -71,13 +65,9 @@ El código anteror realizaría una copia exacta de la tabla `sashelp.class` y la
 
 La cláusula `CREATE TABLE` tambien permite copiar la estructura de una tabla existente usando la palabra clave `LIKE`.
 
-> `PROC SQL;`
->
-> `CREATE TABLA tabla1 LIKE tabla2;`
->
-> `QUIT;`
+> `CREATE TABLE` **`tabla1`** `LIKE` **`tabla2`** `;`
 
-donde `tabla1` es el nombre de la tabla a crear y `tabla2` es la tabla de la cual se copiará la estructura.
+donde **`tabla1`** es el nombre de la tabla a crear y **`tabla2`** es la tabla de la cual se copiará la estructura.
 
 Por ejemplo, es siguiente código creará una tabla vacía copiando la estructura del dataset `sashelp.class`.
 
@@ -87,7 +77,7 @@ PROC SQL;
 QUIT;
 ````
 
-Si se desea crear una tabla completamente nueva, se pueden definir los nombres, tipos y otros metadatos de la tabla.Los nombres de variables deben dentro de un paréntesis y separados por comas.
+Si se desea crear una tabla completamente nueva, se pueden definir los nombres, tipos y otros metadatos de la tabla. Los nombres de variables deben dentro de un paréntesis y separados por comas.
 
 ````sas
 PROC SQL;
@@ -97,6 +87,8 @@ PROC SQL;
     fecha num informat = date. format = ddmmyy.);
 QUIT;
 ````
+
+En el ejemplo anterior, se define la variable __nombre__ como caracter (`char`) de longitud 16, la variable __edad__ de define como numérica y la variable __fecha__ es numérica pero se almacena con formato `ddmmyy.` y los valores introducidos se leen con el formato `date.`, (por ejemplo **01jan20**).
 
 Opcionalmente pueden insertarse nuevos registros en dicha tabla al usar la sentencia `INSERT INTO`, por ejemplo.
 
@@ -113,5 +105,22 @@ PROC SQL;
 	SET NAME = "Daniel",SEX = "M",AGE = 12,HEIGHT=1.35,WEIGHT = 40.5
 	SET NAME = "Alejandra",SEX = "F",AGE=11,HEIGHT=1.45,WEIGHT = 45.0
 ;
+QUIT;
+````
+
+### Seleccionando renglones
+
+Es posible seleccionar los renglones de una consulta usando expresiones condicionales mediante la cláusula `WHERE`. 
+
+La sintaxis es la siguiente:
+
+> `SELECT` **`objeto-1`** _`<, objeto-2,...>`_ `FROM` **`tabla`** `WHERE` **`sql-expression`** `;`
+
+donde **`sql-expression`** es una expresión lógica.
+
+````sas
+PROC SQL;
+    SELECT * FROM sashelp.class
+    WHERE sex = "F";
 QUIT;
 ````
