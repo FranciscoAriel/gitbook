@@ -68,3 +68,50 @@ PROC SQL;
 QUIT;
 ````
 El código anteror realizaría una copia exacta de la tabla `sashelp.class` y la almacenaría en la librería `WORK`.
+
+La cláusula `CREATE TABLE` tambien permite copiar la estructura de una tabla existente usando la palabra clave `LIKE`.
+
+> `PROC SQL;`
+>
+> `CREATE TABLA tabla1 LIKE tabla2;`
+>
+> `QUIT;`
+
+donde `tabla1` es el nombre de la tabla a crear y `tabla2` es la tabla de la cual se copiará la estructura.
+
+Por ejemplo, es siguiente código creará una tabla vacía copiando la estructura del dataset `sashelp.class`.
+
+````sas
+PROC SQL;
+	CREATE TABLE clase LIKE sashelp.class;
+QUIT;
+````
+
+Si se desea crear una tabla completamente nueva, se pueden definir los nombres, tipos y otros metadatos de la tabla.Los nombres de variables deben dentro de un paréntesis y separados por comas.
+
+````sas
+PROC SQL;
+    CREATE TABLE tabla
+    (nombre char(16),
+    edad num, 
+    fecha num informat = date. format = ddmmyy.);
+QUIT;
+````
+
+Opcionalmente pueden insertarse nuevos registros en dicha tabla al usar la sentencia `INSERT INTO`, por ejemplo.
+
+````sas
+PROC SQL;
+    INSERT INTO tabla (nombre,edad,fecha)
+    VALUES ("Francisco",25,"1jan12"d)
+    VALUES ("Jerónimo",29,"11jun15"d)
+    VALUES ("Fernanda",33,"25dec19"d);
+QUIT;
+
+PROC SQL;
+	INSERT INTO clase
+	SET NAME = "Daniel",SEX = "M",AGE = 12,HEIGHT=1.35,WEIGHT = 40.5
+	SET NAME = "Alejandra",SEX = "F",AGE=11,HEIGHT=1.45,WEIGHT = 45.0
+;
+QUIT;
+````
