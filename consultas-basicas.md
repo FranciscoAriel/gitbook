@@ -18,7 +18,7 @@ Para usar el lenguaje SQL en SAS, se debe llamar el procedimiento y se termina c
 > `QUIT;`
 
 
-### Sentencia SELECT
+## Sentencia SELECT
 
 La sentencia básica es SELECT.
 
@@ -62,6 +62,10 @@ PROC SQL;
 QUIT;
 ````
 El código anteror realizaría una copia exacta de la tabla `sashelp.class` y la almacenaría en la librería `WORK`.
+
+{% hint style="danger" %}
+Se debe tener cuidado de hacer consultas con tablas muy grandes, debido a que SAS imprimiria toda la tabla y podría gastar muchos recursos.
+{% endhint %}
 
 La cláusula `CREATE TABLE` tambien permite copiar la estructura de una tabla existente usando la palabra clave `LIKE`.
 
@@ -110,7 +114,7 @@ QUIT;
 
 ### Seleccionando renglones
 
-Es posible seleccionar los renglones de una consulta usando expresiones condicionales mediante la cláusula `WHERE`. 
+Es posible seleccionar los renglones de una consulta usando [expresiones condicionales](https://documentation.sas.com/?docsetId=sqlproc&docsetTarget=p020urejdmvi7vn1t9avbvazqapu.htm&docsetVersion=9.4&locale=en) mediante la cláusula `WHERE`. 
 
 La sintaxis es la siguiente:
 
@@ -124,3 +128,73 @@ PROC SQL;
     WHERE sex = "F";
 QUIT;
 ````
+
+### Creación de nuevas columnas
+
+La sentencia `SELECT` permite crear nuevas columnas, sin embargo, a diferencia de otros lenduajes de programación, no se usa el signo `=` sino la palabra `AS`.
+
+Tambien es posible crear variables booleanas con la estructura 
+
+> `CASE WHEN` **`expresion-sql`** `THEN` **`valor1`** _`<ELSE valor2>`_ `END`
+
+En el siguiente ejemplo se crearán 3 nuevas variables, `adolescente` `altura` y `peso`, así como se definirán sus atributos y se le cambiará el nombre y etiqueta a una existente.
+
+````sas
+PROC SQL;
+    CREATE TABLE clase AS
+    SELECT 
+    name AS nombre LABEL = "Nombre de pila",
+    CASE WHEN age >= 13 THEN 1 ELSE 0 END AS adolescente,
+    height*2.54/100 AS altura FORMAT = 4.2 LABEL = "Altura (m)",
+    weight*0.4535 AS peso FORMAT = 4.2 LABEL = "Peso (Kg)"
+    FROM sashelp.class;
+QUIT;
+````
+
+### Agregados
+
+SQL permite tiene funciones aritméticas y permite aplicarlas por grupos.
+
+Por ejemplo, para obtener el promedio de edades de la tabla, basta ejecutar la siguiente consulta.
+
+````sas
+PROC SQL;
+    CREATE TABLE ejemplo AS
+    SELECT
+    AVG(age)
+    FROM sashelp.class;
+QUIT;
+````
+
+Si se desea obtener subtotales, por ejemplo por sexo, se debe agregar la palabra clave `GROUP BY` despues de la cláusula `FROM`. Es importante poner la variable por la que se va agrupar en la sentencia `SELECT` y en `GROUP BY`.
+
+````sas
+PROC SQL;
+    CREATE TABLE agegado AS
+    SELECT
+	sex AS sexo LABEL = "Género",
+    AVG(age) AS edad_prom LABEL = "Edad Promedio" FORMAT = 5.2
+    FROM sashelp.class
+	GROUP BY sex;
+QUIT;
+```
+
+Es posible filtrar por agregado, para eso de debe poner `HAVING` y una condición después de `GROUP BY`.
+
+El siguiente ejemplo muestra que edades son mayores a 100 libras.
+
+````sas
+PROC SQL;
+    SELECT 
+    age AS edad,
+    avg(weight) AS peso_prom
+    FROM sashelp.class
+    GROUP BY age
+    HAVING avg(weight) > 100;
+QUIT;
+````
+
+### Ordenamiento
+
+### Eliminación de duplicados
+
