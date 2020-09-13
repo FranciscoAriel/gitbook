@@ -177,7 +177,7 @@ PROC SQL;
     FROM sashelp.class
 	GROUP BY sex;
 QUIT;
-```
+````
 
 Es posible filtrar por agregado, para eso de debe poner `HAVING` y una condición después de `GROUP BY`.
 
