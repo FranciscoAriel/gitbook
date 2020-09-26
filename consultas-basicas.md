@@ -196,5 +196,27 @@ QUIT;
 
 ### Ordenamiento
 
+El procesdimineot SQL permite ordenar una base por una o más columnas, por ejemplo
+el siguiente código ordenaría una tabla por edad de forma descendente y nombre.
+
+````sas
+PROC SQL;
+    CREATE TABLE ordenada AS
+    SELECT *
+    FROM sashelp.class
+    ORDER BY age DESCENDING , name;
+QUIT;
+````
+
 ### Eliminación de duplicados
 
+Es posible eliminar valores duplicados usando la palabra clave `DISTINCT` o `UNIQUE` despues de la palabra `SELECT`. 
+
+El siguiente ejemplo crea una tabla que contiene los valores único de edad y sexo.
+
+````sas
+PROC SQL;
+    CREATE TABLE unicos AS
+    SELECT UNIQUE sex,age FROM sashelp.class;
+QUIT;
+````
