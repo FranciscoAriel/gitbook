@@ -86,10 +86,11 @@ PROC SQL;
     FROM sashelp.class;
 QUIT;
 ````
+
 El código anteror realizaría una copia exacta de la tabla `sashelp.class` y la almacenaría en la librería `WORK`.
 
 {% hint style="danger" %}
-Se debe tener cuidado de hacer consultas con tablas muy grandes, debido a que SAS imprimiria toda la tabla y podría gastar muchos recursos.
+Se debe tener cuidado de hacer consultas con tablas muy grandes, debido a que SAS imprimiría toda la tabla y podría gastar muchos recursos.
 {% endhint %}
 
 La cláusula `CREATE TABLE` tambien permite copiar la estructura de una tabla existente usando la palabra clave `LIKE`.
@@ -139,7 +140,7 @@ QUIT;
 
 ### Seleccionando renglones
 
-Es posible seleccionar los renglones de una consulta usando [expresiones condicionales](https://documentation.sas.com/?docsetId=sqlproc&docsetTarget=p020urejdmvi7vn1t9avbvazqapu.htm&docsetVersion=9.4&locale=en) mediante la cláusula `WHERE`. 
+Es posible seleccionar los renglones de una consulta usando [expresiones condicionales](https://documentation.sas.com/?docsetId=sqlproc&docsetTarget=p020urejdmvi7vn1t9avbvazqapu.htm&docsetVersion=9.4&locale=en) mediante la cláusula `WHERE`.
 
 La sintaxis es la siguiente:
 
@@ -150,13 +151,13 @@ donde **`sql-expression`** es una expresión lógica.
 ````sas
 PROC SQL;
     SELECT * FROM sashelp.class
-    WHERE sex = "F";
+    WHERE sex = "F" AND age LE 12;
 QUIT;
 ````
 
 ### Creación de nuevas columnas
 
-La sentencia `SELECT` permite crear nuevas columnas, sin embargo, a diferencia de otros lenduajes de programación, no se usa el signo `=` sino la palabra `AS`.
+La sentencia `SELECT` permite crear nuevas columnas, sin embargo, a diferencia de otros lenguajes de programación, no se usa el signo `=` sino la palabra `AS`.
 
 Tambien es posible crear variables booleanas con la estructura 
 
@@ -197,10 +198,10 @@ Si se desea obtener subtotales, por ejemplo por sexo, se debe agregar la palabra
 PROC SQL;
     CREATE TABLE agegado AS
     SELECT
-	sex AS sexo LABEL = "Género",
+    sex AS sexo LABEL = "Género",
     AVG(age) AS edad_prom LABEL = "Edad Promedio" FORMAT = 5.2
     FROM sashelp.class
-	GROUP BY sex;
+    GROUP BY sex;
 QUIT;
 ````
 
@@ -216,6 +217,19 @@ PROC SQL;
     FROM sashelp.class
     GROUP BY age
     HAVING avg(weight) > 100;
+QUIT;
+````
+
+Note que no podemos referirnos a la variable recien creada `peso_prom` en la sentencia `HAVING` por que no existe como tal esa variable en nuestra tabla. Si se desea hacer eso se puede anteponer la palabra `CALCULATED` al nombre de la variable recian creada. El resultado sería el siguiente:
+
+````sas
+PROC SQL;
+    SELECT 
+    age AS edad,
+    avg(weight) AS peso_prom
+    FROM sashelp.class
+    GROUP BY age
+    HAVING CALCULATED peso_prom > 100;
 QUIT;
 ````
 
@@ -235,7 +249,7 @@ QUIT;
 
 ### Eliminación de duplicados
 
-Es posible eliminar valores duplicados usando la palabra clave `DISTINCT` o `UNIQUE` despues de la palabra `SELECT`. 
+Es posible eliminar valores duplicados usando la palabra clave `DISTINCT` o `UNIQUE` despues de la palabra `SELECT`.
 
 El siguiente ejemplo crea una tabla que contiene los valores único de edad y sexo.
 
