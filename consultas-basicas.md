@@ -251,11 +251,13 @@ QUIT;
 
 Es posible eliminar valores duplicados usando la palabra clave `DISTINCT` o `UNIQUE` despues de la palabra `SELECT`.
 
-El siguiente ejemplo crea una tabla que contiene los valores único de edad y sexo.
+El siguiente ejemplo crea una tabla que contiene los valores único de edad y sexo, además se pide que la tabla se ordene de forma descendente por edad.
 
 ````sas
 PROC SQL;
     CREATE TABLE unicos AS
-    SELECT UNIQUE sex,age FROM sashelp.class;
+    SELECT UNIQUE sex,age 
+    FROM sashelp.class
+    ORDER BY age DESC;
 QUIT;
 ````
