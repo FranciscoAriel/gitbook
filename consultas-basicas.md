@@ -12,7 +12,7 @@ Para usar el lenguaje SQL en SAS, se debe llamar el procedimiento y se termina c
 
 > `PROC SQL;`
 >
->    _`sentencias sql`_
+> _`sentencias sql`_
 >
 > `QUIT;`
 
@@ -63,7 +63,6 @@ Ronald    |M          |15      |  67     |  133
 Thomas    |M          |11      |57.5     |   85
 William   |M          |15      |66.5     |  112
 
-
 Mientras que si solo se desea obtener las variables **name** y **sex**, se usa el siguiente código.
 
 ````sas
@@ -101,7 +100,7 @@ Por ejemplo, es siguiente código creará una tabla vacía copiando la estructur
 
 ````sas
 PROC SQL;
-	CREATE TABLE clase LIKE sashelp.class;
+   CREATE TABLE clase LIKE sashelp.class;
 QUIT;
 ````
 
@@ -129,9 +128,9 @@ PROC SQL;
 QUIT;
 
 PROC SQL;
-	INSERT INTO clase
-	SET NAME = "Daniel",SEX = "M",AGE = 12,HEIGHT=1.35,WEIGHT = 40.5
-	SET NAME = "Alejandra",SEX = "F",AGE=11,HEIGHT=1.45,WEIGHT = 45.0
+   INSERT INTO clase
+   SET NAME = "Daniel",SEX = "M",AGE = 12,HEIGHT=1.35,WEIGHT = 40.5
+   SET NAME = "Alejandra",SEX = "F",AGE=11,HEIGHT=1.45,WEIGHT = 45.0
 ;
 QUIT;
 ````
