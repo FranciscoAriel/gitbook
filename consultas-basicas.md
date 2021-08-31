@@ -10,13 +10,11 @@ Como se mencionó anteriormente, se usará el procedimiento SQL de SAS, aunque n
 
 Para usar el lenguaje SQL en SAS, se debe llamar el procedimiento y se termina con la sentencia QUIT.
 
-
 > `PROC SQL;`
 >
 >    _`sentencias sql`_
 >
 > `QUIT;`
-
 
 ## Sentencia SELECT
 
