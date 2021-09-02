@@ -2,6 +2,10 @@
 description: SQL nivel básico
 ---
 
+# Conceptos básicos
+
+En esta sección se aprenderán los elementos más importantes en la creación de tablas, así como creación de consultas usando el lenguaje SQL.
+
 ## Consultas básicas
 
 En esta sección se mostrarán las consultas más básicas de SQL.
@@ -18,13 +22,13 @@ Para usar el lenguaje SQL en SAS, se debe llamar el procedimiento y se termina c
 
 ## Sentencia SELECT
 
-La sentencia básica es SELECT.
+La sentencia básica es `SELECT`.
 
 Esta sentencia permite elegir diversas variables y permite agregar otras cláusulas como condicionales para recuperar datos de una tabla, el origen de los datos, entre otras.
 
 Para elegir una o más variables, se deben nombrar las columnas de la tabla que se desa consultar, los nombres deben estár separados por una coma. También es posible elegir todas las columnas de la tabla con `*`.
 
-La sentencia SELECT más simple es la siguiente:
+La sentencia `SELECT` más simple es la siguiente:
 
 > `SELECT` **`objeto-1`** _`<, objeto-2,...>`_ `FROM` **`tabla`** `;`
 

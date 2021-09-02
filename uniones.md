@@ -2,17 +2,21 @@
 description: Combinción de 2 o más tablas
 ---
 
-## Combinación de tablas
+# Uniones de tablas
 
-Hasta ahora se ha trabajado con información de una sola tabla, sin embargo es común tener información en 2 o mas tablas.
+En esta sección se hablará acerce de cómo hacer uniones de 2 o más tablas. Primero se estudiarán las uniones de 2 más tablas por medio de una llave y después se tratará el tema de agregar nuevos datos.
 
-En esta sección se mostrará como trabajar con este tipo de información.
+## Combinación de tablas con llaves únicas
 
-### Unión de tablas con llaves
+Hasta ahora se ha trabajado con información de una sola tabla, sin embargo es común tener información en 2 o más tablas.
+
+En esta sección se mostrará como trabajar con este tipo de información, especialmente con aquellas que tienen una llave en común.
+
+### Unión de tablas completas (Full Join)
 
 Considere las siguientes tablas
 
-**Nuevos**
+Nuevos:
 
 id|nombre|edad
 --|------|----|
@@ -20,7 +24,7 @@ id|nombre|edad
 2|Bárbara|25
 5|Cecilia|32
 
-**Empleados**
+Empleados:
 
 id|posicion|fecha_ingreso
 --|-----|-------|
@@ -29,7 +33,7 @@ id|posicion|fecha_ingreso
 3|Analista Sr.|01/01/2019
 4|Gerente|05/06/2018
 
-Note que las dos tablas tienen en común la variable _id_ y solo tiene el id 1 es común en ambas tablas.
+Note que las dos tablas tienen en común la variable _id_ y sólo tiene los ids 1 y 2 son comunes en ambas tablas.
 
 Si se desea unir ambas tablas, se puede usar el campo llave _id_ y usar el siguiente código:
 
@@ -76,3 +80,29 @@ PROC SQL;
    ON A.ID EQ B.ID;
 QUIT;
 ````
+
+### Unión de tablas con elementos en común (inner join)
+
+Si se desea unir únicamente los elementos en común, se puede aplicar el siguiente código.
+
+````sas
+PROC SQL;
+   CREATE TABLE TABLA AS
+   SELECT 
+   COALESCE(A.id,B.id) AS id, *
+   FROM NUEVOS AS A
+   INNER JOIN EMPLEADOS AS B
+   ON A.ID EQ B.ID;
+QUIT;
+````
+
+El resultado sería el siguiente:
+
+id|nombre|edad|posicion|fecha_ingreso
+--|------|----|--------|------------|
+1|Andrés|30|Analista Jr.|10/01/2020
+2|Bárbara|25|Analista Jr.|25/09/2019
+
+{% hint style="success" %}
+Puede usarse simplemente la palabra `JOIN` en lugar de `INNER JOIN` para uniones con elementos en común.
+{% endhint %}
