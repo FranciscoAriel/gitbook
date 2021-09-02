@@ -29,7 +29,7 @@ id|posicion|fecha_ingreso
 3|Analista Sr.|01/01/2019
 4|Gerente|05/06/2018
 
-Note que ambas tablas tienen en común la variable _id_ y solo tiene el id 1 es común en ambaas tablas.
+Note que las dos tablas tienen en común la variable _id_ y solo tiene el id 1 es común en ambas tablas.
 
 Si se desea unir ambas tablas, se puede usar el campo llave _id_ y usar el siguiente código:
 
@@ -46,7 +46,7 @@ Sin embargo el log muestra el siguiente mensaje.
 
 > WARNING: La variable id ya existe en el archivo WORK.TABLA
 
-Al revisar la tabla, se obtiene el siguiente resultado:
+Esto se debe a que las dos tablas tienen un mismo nombrede variable (_id_). Al revisar la tabla, se obtiene el siguiente resultado:
 
 id|nombre|edad|posicion|fecha_ingreso
 --|------|----|--------|------------|
@@ -63,3 +63,16 @@ Se pueden usar variables indicadoras para saber de qué tabla proviene cada obse
 {% endhint %}
 
 Para conservar todos los id en común se usa la función `COALESCE` (o `COALESCEC` para variables de tipo carcter).
+
+El siguiente código soluciona dichos problemas:
+
+````sas
+PROC SQL;
+   CREATE TABLE TABLA AS
+   SELECT 
+   COALESCE(A.id,B.id) AS id, *
+   FROM NUEVOS AS A
+   FULL JOIN EMPLEADOS AS B
+   ON A.ID EQ B.ID;
+QUIT;
+````
