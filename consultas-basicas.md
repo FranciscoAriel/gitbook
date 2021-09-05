@@ -2,7 +2,7 @@
 description: SQL nivel básico
 ---
 
-# Conceptos básicos
+# Consultas básicas
 
 En esta sección se aprenderán los elementos más importantes en la creación de tablas, así como creación de consultas usando el lenguaje SQL.
 
@@ -36,57 +36,57 @@ donde **`objeto-1`** representa el nombre de una variable o el símbolo `*` y **
 
 Por ejemplo el siguiente código seleccionaría todas las columnas y observaciones de la tabla `sashelp.class`.
 
-````sas
+```text
 PROC SQL;
     SELECT * 
     FROM sashelp.class;
 QUIT;
-````
+```
 
 El resultado es el siguiente:
 
-Name|      Sex|       Age|    Height|    Weight
-----|---------|----------|----------|----------
-Alfred    |M          |14      |  69     |112.5
-Alice     |F          |13      |56.5     |   84
-Barbara   |F          |13      |65.3     |   98
-Carol     |F          |14      |62.8     |102.5
-Henry     |M          |14      |63.5     |102.5
-James     |M          |12      |57.3     |   83
-Jane      |F          |12      |59.8     | 84.5
-Janet     |F          |15      |62.5     |112.5
-Jeffrey   |M          |13      |62.5     |   84
-John      |M          |12      |  59     | 99.5
-Joyce     |F          |11      |51.3     | 50.5
-Judy      |F          |14      |64.3     |   90
-Louise    |F          |12      |56.3     |   77
-Mary      |F          |15      |66.5     |  112
-Philip    |M          |16      |  72     |  150
-Robert    |M          |12      |64.8     |  128
-Ronald    |M          |15      |  67     |  133
-Thomas    |M          |11      |57.5     |   85
-William   |M          |15      |66.5     |  112
+| Name | Sex | Age | Height | Weight |
+| :--- | :--- | :--- | :--- | :--- |
+| Alfred | M | 14 | 69 | 112.5 |
+| Alice | F | 13 | 56.5 | 84 |
+| Barbara | F | 13 | 65.3 | 98 |
+| Carol | F | 14 | 62.8 | 102.5 |
+| Henry | M | 14 | 63.5 | 102.5 |
+| James | M | 12 | 57.3 | 83 |
+| Jane | F | 12 | 59.8 | 84.5 |
+| Janet | F | 15 | 62.5 | 112.5 |
+| Jeffrey | M | 13 | 62.5 | 84 |
+| John | M | 12 | 59 | 99.5 |
+| Joyce | F | 11 | 51.3 | 50.5 |
+| Judy | F | 14 | 64.3 | 90 |
+| Louise | F | 12 | 56.3 | 77 |
+| Mary | F | 15 | 66.5 | 112 |
+| Philip | M | 16 | 72 | 150 |
+| Robert | M | 12 | 64.8 | 128 |
+| Ronald | M | 15 | 67 | 133 |
+| Thomas | M | 11 | 57.5 | 85 |
+| William | M | 15 | 66.5 | 112 |
 
 Mientras que si solo se desea obtener las variables **name** y **sex**, se usa el siguiente código.
 
-````sas
+```text
 PROC SQL;
     SELECT name,sex 
     FROM sashelp.class;
 QUIT;
-````
+```
 
 ### Almacenando una consulta
 
 La sentecia `SELECT` realiza únicamente una consulta, la cual se mostrará en la ventana de resultados, si se desea guardar esa consulta en una tabla, se debe anteponer la cláusula `CREATE TABLE` seguido de un nombre válido y la palabra clave `AS`.
 
-````sas
+```text
 PROC SQL;
     CREATE TABLE clase AS
     SELECT * 
     FROM sashelp.class;
 QUIT;
-````
+```
 
 El código anteror realizaría una copia exacta de la tabla `sashelp.class` y la almacenaría en la librería `WORK`.
 
@@ -102,28 +102,28 @@ donde **`tabla1`** es el nombre de la tabla a crear y **`tabla2`** es la tabla d
 
 Por ejemplo, es siguiente código creará una tabla vacía copiando la estructura del dataset `sashelp.class`.
 
-````sas
+```text
 PROC SQL;
    CREATE TABLE clase LIKE sashelp.class;
 QUIT;
-````
+```
 
 Si se desea crear una tabla completamente nueva, se pueden definir los nombres, tipos y otros metadatos de la tabla. Los nombres de variables deben dentro de un paréntesis y separados por comas.
 
-````sas
+```text
 PROC SQL;
     CREATE TABLE tabla
     (nombre char(16),
     edad num, 
     fecha num informat = date. format = ddmmyy.);
 QUIT;
-````
+```
 
-En el ejemplo anterior, se define la variable __nombre__ como caracter (`char`) de longitud 16, la variable __edad__ de define como numérica y la variable __fecha__ es numérica pero se almacena con formato `ddmmyy.` y los valores introducidos se leen con el formato `date.`, (por ejemplo **01jan20**).
+En el ejemplo anterior, se define la variable **nombre** como caracter \(`char`\) de longitud 16, la variable **edad** de define como numérica y la variable **fecha** es numérica pero se almacena con formato `ddmmyy.` y los valores introducidos se leen con el formato `date.`, \(por ejemplo **01jan20**\).
 
 Opcionalmente pueden insertarse nuevos registros en dicha tabla al usar la sentencia `INSERT INTO`, por ejemplo.
 
-````sas
+```text
 PROC SQL;
     INSERT INTO tabla (nombre,edad,fecha)
     VALUES ("Francisco",25,"1jan12"d)
@@ -137,7 +137,7 @@ PROC SQL;
    SET NAME = "Alejandra",SEX = "F",AGE=11,HEIGHT=1.45,WEIGHT = 45.0
 ;
 QUIT;
-````
+```
 
 ### Seleccionando renglones
 
@@ -149,34 +149,35 @@ La sintaxis es la siguiente:
 
 donde **`sql-expression`** es una expresión lógica.
 
-````sas
+```text
 PROC SQL;
     SELECT * FROM sashelp.class
     WHERE sex = "F" AND age LE 12;
 QUIT;
-````
+```
 
 ### Creación de nuevas columnas
 
-La sentencia `SELECT` permite crear nuevas columnas, sin embargo, a diferencia de otros lenguajes de programación, no se usa el signo `=` sino la palabra `AS`.
+La sentencia `SELECT` permite crear nuevas columnas, sin embargo, a diferencia de otros lenguajes de programación, no se usa el signo `=` sino la palabra `AS`. Es posible usas [funciones de SAS](https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/lefunctionsref/n01f5qrjoh9h4hn1olbdpb5pr2td.htm) para crear nuevas columnas.
 
-Tambien es posible crear variables booleanas con la estructura 
+También es posible crear variables booleanas con la estructura
 
 > `CASE WHEN` **`expresion-sql`** `THEN` **`valor1`** _`<ELSE valor2>`_ `END`
 
-En el siguiente ejemplo se crearán 3 nuevas variables, `adolescente` `altura` y `peso`, así como se definirán sus atributos y se le cambiará el nombre y etiqueta a una existente.
+En el siguiente ejemplo se crearán 4 nuevas variables `inicial`, `adolescente`,`altura` y `peso`, así como se definirán sus atributos y se le cambiará el nombre y etiqueta a una existente.
 
-````sas
+```text
 PROC SQL;
     CREATE TABLE clase AS
     SELECT 
     name AS nombre LABEL = "Nombre de pila",
+    substr(name) AS inicial,
     CASE WHEN age >= 13 THEN 1 ELSE 0 END AS adolescente,
     height*2.54/100 AS altura FORMAT = 4.2 LABEL = "Altura (m)",
     weight*0.4535 AS peso FORMAT = 4.2 LABEL = "Peso (Kg)"
     FROM sashelp.class;
 QUIT;
-````
+```
 
 ### Agregados
 
@@ -184,18 +185,18 @@ SQL permite tiene funciones aritméticas y permite aplicarlas por grupos.
 
 Por ejemplo, para obtener el promedio de edades de la tabla, basta ejecutar la siguiente consulta.
 
-````sas
+```text
 PROC SQL;
     CREATE TABLE ejemplo AS
     SELECT
     AVG(age)
     FROM sashelp.class;
 QUIT;
-````
+```
 
 Si se desea obtener subtotales, por ejemplo por sexo, se debe agregar la palabra clave `GROUP BY` despues de la cláusula `FROM`. Es importante poner la variable por la que se va agrupar en la sentencia `SELECT` y en `GROUP BY`.
 
-````sas
+```text
 PROC SQL;
     CREATE TABLE agegado AS
     SELECT
@@ -204,13 +205,13 @@ PROC SQL;
     FROM sashelp.class
     GROUP BY sex;
 QUIT;
-````
+```
 
 Es posible filtrar por agregado, para eso de debe poner `HAVING` y una condición después de `GROUP BY`.
 
 El siguiente ejemplo muestra que edades son mayores a 100 libras.
 
-````sas
+```text
 PROC SQL;
     SELECT 
     age AS edad,
@@ -219,11 +220,11 @@ PROC SQL;
     GROUP BY age
     HAVING avg(weight) > 100;
 QUIT;
-````
+```
 
 Note que no podemos referirnos a la variable recien creada `peso_prom` en la sentencia `HAVING` por que no existe como tal esa variable en nuestra tabla. Si se desea hacer eso se puede anteponer la palabra `CALCULATED` al nombre de la variable recian creada. El resultado sería el siguiente:
 
-````sas
+```text
 PROC SQL;
     SELECT 
     age AS edad,
@@ -232,21 +233,20 @@ PROC SQL;
     GROUP BY age
     HAVING CALCULATED peso_prom > 100;
 QUIT;
-````
+```
 
 ### Ordenamiento
 
-El procesdimineot SQL permite ordenar una base por una o más columnas, por ejemplo
-el siguiente código ordenaría una tabla por edad de forma descendente y nombre.
+El procesdimineot SQL permite ordenar una base por una o más columnas, por ejemplo el siguiente código ordenaría una tabla por edad de forma descendente y nombre.
 
-````sas
+```text
 PROC SQL;
     CREATE TABLE ordenada AS
     SELECT *
     FROM sashelp.class
     ORDER BY age DESCENDING , name;
 QUIT;
-````
+```
 
 ### Eliminación de duplicados
 
@@ -254,11 +254,12 @@ Es posible eliminar valores duplicados usando la palabra clave `DISTINCT` o `UNI
 
 El siguiente ejemplo crea una tabla que contiene los valores único de edad y sexo, además se pide que la tabla se ordene de forma descendente por edad.
 
-````sas
+```text
 PROC SQL;
     CREATE TABLE unicos AS
     SELECT UNIQUE sex,age 
     FROM sashelp.class
     ORDER BY age DESC;
 QUIT;
-````
+```
+
