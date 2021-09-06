@@ -2,7 +2,7 @@
 description: SQL nivel básico
 ---
 
-# Consultas básicas
+# Principios básicos de SQL
 
 En esta sección se aprenderán los elementos más importantes en la creación de tablas, así como creación de consultas usando el lenguaje SQL.
 
@@ -158,11 +158,13 @@ QUIT;
 
 ### Creación de nuevas columnas
 
-La sentencia `SELECT` permite crear nuevas columnas, sin embargo, a diferencia de otros lenguajes de programación, no se usa el signo `=` sino la palabra `AS`. Es posible usas [funciones de SAS](https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/lefunctionsref/n01f5qrjoh9h4hn1olbdpb5pr2td.htm) para crear nuevas columnas.
+La sentencia `SELECT` permite crear nuevas columnas, sin embargo, a diferencia de otros lenguajes de programación, no se usa el signo `=` sino la palabra `AS`. Es posible usar [funciones de SAS](https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.5/lefunctionsref/n01f5qrjoh9h4hn1olbdpb5pr2td.htm) para crear nuevas columnas.
 
 También es posible crear variables booleanas con la estructura
 
 > `CASE WHEN` **`expresion-sql`** `THEN` **`valor1`** _`<ELSE valor2>`_ `END`
+
+esta cláusula es similar a las estructuras _IF-ELSE_ de varios lenguajs de programación.
 
 En el siguiente ejemplo se crearán 4 nuevas variables `inicial`, `adolescente`,`altura` y `peso`, así como se definirán sus atributos y se le cambiará el nombre y etiqueta a una existente.
 
@@ -171,7 +173,7 @@ PROC SQL;
     CREATE TABLE clase AS
     SELECT 
     name AS nombre LABEL = "Nombre de pila",
-    substr(name) AS inicial,
+    substr(name,1,1) AS inicial,
     CASE WHEN age >= 13 THEN 1 ELSE 0 END AS adolescente,
     height*2.54/100 AS altura FORMAT = 4.2 LABEL = "Altura (m)",
     weight*0.4535 AS peso FORMAT = 4.2 LABEL = "Peso (Kg)"
@@ -262,4 +264,3 @@ PROC SQL;
     ORDER BY age DESC;
 QUIT;
 ```
-
