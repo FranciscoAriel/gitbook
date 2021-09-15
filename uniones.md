@@ -10,7 +10,7 @@ En esta sección se hablará acerce de cómo hacer uniones de 2 o más tablas. P
 
 Hasta ahora se ha trabajado con información de una sola tabla, sin embargo es común tener información en 2 o más tablas.
 
-En esta sección se mostrará como trabajar con este tipo de información, especialmente con aquellas que tienen una llave en común.
+En esta sección se mostrará como trabajar con este tipo de información, especialmente con aquellas que tienen una llave sin duplicados en común.
 
 ### Unión de tablas completas (Full Join)
 
@@ -35,7 +35,15 @@ id|posicion|fecha_ingreso
 
 Note que las dos tablas tienen en común la variable _id_ y sólo tiene los ids 1 y 2 son comunes en ambas tablas.
 
-Si se desea unir ambas tablas, se puede usar el campo llave _id_ y usar el siguiente código:
+{% hint style="info" %}
+Cuando la información proviene de observaciones no empatadas, a esa unión se le conoce como _outer join_.
+{% endhint %}
+
+{% hint style="info" %}
+Cuando la información está presente en todas las fuentes, a esa unión se le conoce como _full join_.
+{% endhint %}
+
+Si se desea unir ambas tablas, admitiendo información que esté en ambas tablas, se puede usar el campo llave _id_ y usar el siguiente código:
 
 ````sas
 PROC SQL;
@@ -106,3 +114,30 @@ id|nombre|edad|posicion|fecha_ingreso
 {% hint style="success" %}
 Puede usarse simplemente la palabra `JOIN` en lugar de `INNER JOIN` para uniones con elementos en común.
 {% endhint %}
+
+Note que se tiene información en donde las llaves coinciden, de otra forma, las observaciones son descartadas.
+
+### Unión de tablas asimétricas (left join y right join)
+
+Si se desea conservar la información de una tabla más la información que coincide con otra se puede usar una unión asimétrica.
+
+Por ejemplo, supóngase que se desea conservar la toda  la tabla de empleados nuevos. El código que se podría usar sería el siguiente.
+
+````sas
+PROC SQL;
+   CREATE TABLE TABLA AS
+   SELECT 
+   *
+   FROM NUEVOS AS A
+   LEFT JOIN EMPLEADOS AS B
+   ON A.ID EQ B.ID;
+QUIT;
+````
+
+El resultado sería el siguiente.
+
+id|nombre|edad|posicion|fecha_ingreso
+--|------|----|--------|------------|
+1|Andrés|30|Analista Jr.|10/01/2020
+2|Bárbara|25|Analista Jr.|25/09/2019
+5|Cecilia|32||.
