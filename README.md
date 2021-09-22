@@ -12,5 +12,4 @@ Se usará el procedimiento SQL de **SAS/SQL &reg;** para trabajar estos ejemplos
 Se puede usar **SAS &reg; software** con fines de aprendizaje. Visite [**SAS &reg; OnDemand for Academics**](https://www.sas.com/en_us/software/on-demand-for-academics.html) para más información.
 {% endhint %}
 
-
-Este libro fue escrito en formato Markdown usando [gitbook](https://www.gitbook.com/).
+Este libro fue escrito en formato Markdown usando [gitbook](https://www.gitbook.com/). Se aceptan propuestas y modificaciones mediante github.
