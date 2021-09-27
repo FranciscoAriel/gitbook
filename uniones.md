@@ -6,7 +6,7 @@ description: Combinción de 2 o más tablas
 
 En esta sección se hablará acerce de cómo hacer uniones de 2 o más tablas. Primero se estudiarán las uniones de 2 más tablas por medio de una llave y después se tratará el tema de agregar nuevos datos.
 
-## Combinación de tablas con llaves únicas
+## Unión de tablas con llaves únicas
 
 Hasta ahora se ha trabajado con información de una sola tabla, sin embargo es común tener información en 2 o más tablas.
 
@@ -178,3 +178,44 @@ PROC SQL;
    ON A.ID EQ B.ID;
 QUIT;
 ````
+
+## Unión de tablas con llaves duplicadas
+
+Si las tablas que se van a unir tienen llaves duplicadas, el resultado es muy distinto, debido a que SQL realiza un producto cartesiano, es decir, cada llave de la primer tabla, se empareja con su par de la segunda. El siguiente ejemplo ilustra el producto cartesiano.
+
+Suponga que se tienen las siguientes tablas
+
+Nuevos:
+
+id|nombre|edad
+--|------|----|
+1|Andrés|30
+1|Andrea|30
+2|Bárbara|25
+5|Cecilia|32
+
+Empleados:
+
+id|posicion|fecha_ingreso
+--|-----|-------|
+1|Analista Jr.|10/01/2020
+1|Gerente|10/10/2020
+2|Administrador|12/12/2020
+2|Analista Jr.|25/09/2019
+3|Analista Sr.|01/01/2019
+4|Gerente|05/06/2018
+
+Al realizar un *inner join* se obtiene el siguiente resultado:
+
+id|nombre|edad|posicion|fecha_ingreso
+--|------|----|---------|-----------|
+1|Andrés|30|Analista Jr.|10/01/2020
+1|Andrea|30|Analista Jr.|10/01/2020
+1|Andrés|30|Gerente|10/10/2020
+1|Andrea|30|Gerente|10/10/2020
+2|Benito|26|Administrador|12/12/2020
+2|Bárbara|25|Administrador|12/12/2020
+2|Benito|26|Analista Jr.|25/09/2019
+2|Bárbara|25|Analista Jr.|25/09/2019
+
+Como se puede observar, cada id de la primer se empata con el id de la segunda tabla. Por ejemplo, Andrés puede ser ya sea Gerente o Analista Jr. y así sucesivamente para los otros empleados.
