@@ -219,3 +219,39 @@ id|nombre|edad|posicion|fecha_ingreso
 2|Bárbara|25|Analista Jr.|25/09/2019
 
 Como se puede observar, cada id de la primer se empata con el id de la segunda tabla. Por ejemplo, Andrés puede ser ya sea Gerente o Analista Jr. y así sucesivamente para los otros empleados.
+
+## Unión con más de 2 tablas
+
+Supóngase que se tiene una tercer tabla que contiene el **id** y **area**.
+
+id|area
+--|----
+1|Finanzas
+2|Sistemas
+3|Contabilidad
+4|Sistemas
+5|Finanzas
+
+El siguiente código muestra cómo unir las tres tablas.
+
+````sas
+PROC SQL;
+    CREATE TABLE tabla AS
+    SELECT COALESCE(A.id, B.id,C.id) AS id,*
+    FROM nuevos AS a 
+    FULL JOIN empleados AS b 
+    ON a.id EQ b.id
+    FULL JOIN areas AS c
+    ON COALESCE(a.id,b.id) EQ c.id;
+QUIT;
+````
+
+Al unir las tres tablas por **id** se obtiene el siguiente resultado.
+
+id|nombre|edad|posicion|fecha_ingreso|departamento
+--|------|----|--------|-------------|------------|
+1|Andrés|30|Analista Jr.|10/01/2020|Finanzas
+2|Bárbara|25|Analista Jr.|25/09/2019|Sistemas
+3| |.|Analista Sr.|01/01/2019|Contabilidad
+4| |.|Gerente|05/06/2018|Sistemas
+5|Cecilia|32| |.|Finanzas
