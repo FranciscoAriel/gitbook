@@ -213,9 +213,7 @@ id|nombre|edad|posicion|fecha_ingreso
 1|Andrea|30|Analista Jr.|10/01/2020
 1|Andrés|30|Gerente|10/10/2020
 1|Andrea|30|Gerente|10/10/2020
-2|Benito|26|Administrador|12/12/2020
 2|Bárbara|25|Administrador|12/12/2020
-2|Benito|26|Analista Jr.|25/09/2019
 2|Bárbara|25|Analista Jr.|25/09/2019
 
 Como se puede observar, cada id de la primer se empata con el id de la segunda tabla. Por ejemplo, Andrés puede ser ya sea Gerente o Analista Jr. y así sucesivamente para los otros empleados.
@@ -232,7 +230,7 @@ id|area
 4|Sistemas
 5|Finanzas
 
-El siguiente código muestra cómo unir las tres tablas.
+El siguiente código muestra cómo unir las tres tablas. Nótese que se desea conservar la tabla A como principal.
 
 ````sas
 PROC SQL;
@@ -255,3 +253,32 @@ id|nombre|edad|posicion|fecha_ingreso|departamento
 3| |.|Analista Sr.|01/01/2019|Contabilidad
 4| |.|Gerente|05/06/2018|Sistemas
 5|Cecilia|32| |.|Finanzas
+
+## Agregar nuevas observaciones
+
+Supóngase que se desean agregar nuevas observaciones a una tabla exigente.
+
+La tabla **plantilla** contiene a los empleados que están registrados actualmente.
+
+id|nombre|edad
+--|------|----
+3|María|45
+4|Vicente|40
+6|Rodrigo|38
+10|Alberto|46
+15|Helena|50
+18|Roberto|42
+
+ Se desea crear otra tabla que contenga tanto a los existentes como a los nuevos.
+
+ El siguiente código muestra como agrgar nuevos registros a una tabla
+
+````sas
+PROC SQL;
+   CREATE TABLE PERSONAL AS 
+   SELECT * FROM plantilla 
+   UNION SELECT * FROM nuevos;
+QUIT;
+ ````
+
+ Al usar la palabra clave `UNION`
