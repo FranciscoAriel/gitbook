@@ -281,4 +281,5 @@ PROC SQL;
 QUIT;
  ````
 
- Al usar la palabra clave `UNION`
+ Al usar la palabra clave `UNION` se especifica que se deben unir todas las observaciones de la tabla nuevos a la tabla plantilla. Esta palabra clave permite unir observaciones tanto de la primer tabla como de la segunda, y como ambas tablas tienen las mismas columnas, el dataset resultante no se altera.
+ 
