@@ -4,7 +4,7 @@ description: Combinción de 2 o más tablas
 
 # Uniones de tablas
 
-En esta sección se hablará acerce de cómo hacer uniones de 2 o más tablas. Primero se estudiarán las uniones de 2 más tablas por medio de una llave y después se tratará el tema de agregar nuevos datos.
+En esta sección se hablará acerca de cómo hacer uniones de 2 o más tablas. Primero se estudiarán las uniones de 2 más tablas por medio de una llave y después se tratará el tema de agregar nuevos datos.
 
 ## Unión de tablas con llaves únicas
 
@@ -269,6 +269,15 @@ id|nombre|edad
 15|Helena|50
 18|Roberto|42
 
+La tabla **nuevos** contiene a los empleados de nuevo ingreso.
+
+id|nombre|edad
+--|------|----
+100|Juan|25
+100|Juan|25
+105|Guadalupe|30
+110|José Luis|35
+
  Se desea crear otra tabla que contenga tanto a los existentes como a los nuevos.
 
  El siguiente código muestra como agrgar nuevos registros a una tabla
@@ -281,5 +290,52 @@ PROC SQL;
 QUIT;
  ````
 
- Al usar la palabra clave `UNION` se especifica que se deben unir todas las observaciones de la tabla nuevos a la tabla plantilla. Esta palabra clave permite unir observaciones tanto de la primer tabla como de la segunda, y como ambas tablas tienen las mismas columnas, el dataset resultante no se altera.
- 
+Se puede usar el operador `UNION` el cual especifica que se deben unir todas las observaciones *únicas* de las consultas, en este caso de la tabla **nuevos** y la tabla **plantilla**. Como ambas tablas tienen las mismas columnas, el dataset resultante no se altera.
+
+El resultado es el siguiente:
+
+id|nombre|edad
+--|------|----
+3|María|45
+4|Vicente|40
+6|Rodrigo|38
+10|Alberto|46
+15|Helena|50
+18|Roberto|42
+100|Juan|25
+105|Guadalupe|30
+110|José Luis|35
+
+Note que a pesar de que en la tabla **nuevos**, el registro 1 y 2 estaban duplicados, únicamente se obtuvo un registro y se eliminó el duplicado.
+
+Si se desea traer toda la información a pesar de que esté duplicada la información, se puede usar la palabra `ALL` despues del operador `UNION`.
+
+````sas
+PROC SQL;
+   CREATE TABLE PERSONAL AS 
+   SELECT * FROM plantilla 
+   UNION ALL
+   SELECT * FROM nuevos;
+QUIT;
+ ````
+
+El resultado es el siguiente:
+
+id|nombre|edad
+--|------|----
+3|María|45
+4|Vicente|40
+6|Rodrigo|38
+10|Alberto|46
+15|Helena|50
+18|Roberto|42
+100|Juan|25
+100|Juan|25
+105|Guadalupe|30
+110|José Luis|35
+
+Estos operadores son conocidos como **Operadores de conjunto** y forman parte de una **expresión de consulta**.
+
+Una expresión de consulta está formada por una o más tablas unidas por un operador de conjunto. Por ejemplo se hizo la consulta `SELECT * FROM plantilla UNION SELECT * FROM nuevos`.
+
+Para saber más acerca de los operadores de conjunto visite la [documentación](https://documentation.sas.com/doc/es/pgmsascdc/9.4_3.5/sqlproc/p1o6k7t8y56hobn1mup90vpf4ye6.htm).

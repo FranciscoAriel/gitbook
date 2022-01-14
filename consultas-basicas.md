@@ -36,7 +36,7 @@ donde **`objeto-1`** representa el nombre de una variable o el símbolo `*` y **
 
 Por ejemplo el siguiente código seleccionaría todas las columnas y observaciones de la tabla `sashelp.class`.
 
-```text
+```sas
 PROC SQL;
     SELECT * 
     FROM sashelp.class;
@@ -69,7 +69,7 @@ El resultado es el siguiente:
 
 Mientras que si solo se desea obtener las variables **name** y **sex**, se usa el siguiente código.
 
-```text
+```sas
 PROC SQL;
     SELECT name,sex 
     FROM sashelp.class;
@@ -80,7 +80,7 @@ QUIT;
 
 La sentecia `SELECT` realiza únicamente una consulta, la cual se mostrará en la ventana de resultados, si se desea guardar esa consulta en una tabla, se debe anteponer la cláusula `CREATE TABLE` seguido de un nombre válido y la palabra clave `AS`.
 
-```text
+```sas
 PROC SQL;
     CREATE TABLE clase AS
     SELECT * 
@@ -102,7 +102,7 @@ donde **`tabla1`** es el nombre de la tabla a crear y **`tabla2`** es la tabla d
 
 Por ejemplo, es siguiente código creará una tabla vacía copiando la estructura del dataset `sashelp.class`.
 
-```text
+```sas
 PROC SQL;
    CREATE TABLE clase LIKE sashelp.class;
 QUIT;
@@ -110,7 +110,7 @@ QUIT;
 
 Si se desea crear una tabla completamente nueva, se pueden definir los nombres, tipos y otros metadatos de la tabla. Los nombres de variables deben dentro de un paréntesis y separados por comas.
 
-```text
+```sas
 PROC SQL;
     CREATE TABLE tabla
     (nombre char(16),
@@ -119,7 +119,7 @@ PROC SQL;
 QUIT;
 ```
 
-En el ejemplo anterior, se define la variable **nombre** como caracter \(`char`\) de longitud 16, la variable **edad** de define como numérica y la variable **fecha** es numérica pero se almacena con formato `ddmmyy.` y los valores introducidos se leen con el formato `date.`, \(por ejemplo **01jan20**\).
+En el ejemplo anterior, se define la variable **nombre** como caracter o tipo `char` de longitud 16, la variable **edad** de define como numérica y la variable **fecha** es numérica pero se almacena con formato `ddmmyy.` y los valores introducidos se leen con el formato `date.`, por ejemplo **01jan20**.
 
 Opcionalmente pueden insertarse nuevos registros en dicha tabla al usar la sentencia `INSERT INTO`, por ejemplo.
 
@@ -196,6 +196,8 @@ PROC SQL;
 QUIT;
 ```
 
+Para conocer todas las funciones disponibles en el procedimiento SQL, consulte la [documentación](https://documentation.sas.com/doc/es/pgmsascdc/9.4_3.5/sqlproc/n123fsko39j44pn16zlt087e1m2h.htm).
+
 Si se desea obtener subtotales, por ejemplo por sexo, se debe agregar la palabra clave `GROUP BY` despues de la cláusula `FROM`. Es importante poner la variable por la que se va agrupar en la sentencia `SELECT` y en `GROUP BY`.
 
 ```text
@@ -237,11 +239,11 @@ PROC SQL;
 QUIT;
 ```
 
-### Ordenamiento
+### Ordenamiento y eliminación de duplicados
 
-El procesdimineot SQL permite ordenar una base por una o más columnas, por ejemplo el siguiente código ordenaría una tabla por edad de forma descendente y nombre.
+El procedimieto SQL permite ordenar una base por una o más columnas, por ejemplo el siguiente código ordenaría una tabla por edad de forma descendente y nombre.
 
-```text
+```sas
 PROC SQL;
     CREATE TABLE ordenada AS
     SELECT *
@@ -250,13 +252,11 @@ PROC SQL;
 QUIT;
 ```
 
-### Eliminación de duplicados
-
-Es posible eliminar valores duplicados usando la palabra clave `DISTINCT` o `UNIQUE` despues de la palabra `SELECT`.
+También es posible eliminar valores duplicados usando la palabra clave `DISTINCT` o `UNIQUE` despues de la palabra `SELECT`.
 
 El siguiente ejemplo crea una tabla que contiene los valores único de edad y sexo, además se pide que la tabla se ordene de forma descendente por edad.
 
-```text
+```sas
 PROC SQL;
     CREATE TABLE unicos AS
     SELECT UNIQUE sex,age 
