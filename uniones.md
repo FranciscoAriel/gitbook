@@ -64,8 +64,8 @@ id|nombre|edad|posicion|fecha_ingreso
 --|------|----|--------|------------|
 1|Andrés|30|Analista Jr.|10/01/2020
 2|Bárbara|25|Analista Jr.|25/09/2019
-.| |.|Analista Sr.|01/01/2019
-.| |.|Gerente|05/06/2018
+.|" " |.|Analista Sr.|01/01/2019
+.|" " |.|Gerente|05/06/2018
 5|Cecilia|32||.
 
 Observe que la variable _id_ tiene valores vacíos, esto se debe a que la tabla _A_ predomina y se conservan los valores.
