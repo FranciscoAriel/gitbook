@@ -162,8 +162,8 @@ id|nombre|edad|posicion|fecha_ingreso
 --|------|----|--------|------------|
 1|Andrés|30|Analista Jr.|10/01/2020
 2|Bárbara|25|Analista Jr.|25/09/2019
-.||.|Analista Sr.|01/01/2019
-.||.|Gerente|05/06/2018
+.|" "|.|Analista Sr.|01/01/2019
+.|" "|.|Gerente|05/06/2018
 
 Obsérvese que debido a que en la tabla *nuevos* no se tiene información de los ids 3 y 4, ni sus edades, el resultado arroja un valor missing debido a que la tabla A **predomina** al hacer la consulta. Si se quieren conservar los valores de los ids, se debe hacer uso de la función `COALESCE`.
 
