@@ -123,7 +123,7 @@ En el ejemplo anterior, se define la variable **nombre** como caracter o tipo `c
 
 Opcionalmente pueden insertarse nuevos registros en dicha tabla al usar la sentencia `INSERT INTO`, por ejemplo.
 
-```text
+```sas
 PROC SQL;
     INSERT INTO tabla (nombre,edad,fecha)
     VALUES ("Francisco",25,"1jan12"d)
@@ -149,7 +149,7 @@ La sintaxis es la siguiente:
 
 donde **`sql-expression`** es una expresión lógica.
 
-```text
+```sas
 PROC SQL;
     SELECT * FROM sashelp.class
     WHERE sex = "F" AND age LE 12;
@@ -168,7 +168,7 @@ esta cláusula es similar a las estructuras _IF-ELSE_ de varios lenguajs de prog
 
 En el siguiente ejemplo se crearán 4 nuevas variables `inicial`, `adolescente`,`altura` y `peso`, así como se definirán sus atributos y se le cambiará el nombre y etiqueta a una existente.
 
-```text
+```sas
 PROC SQL;
     CREATE TABLE clase AS
     SELECT 
@@ -187,7 +187,7 @@ SQL permite tiene funciones aritméticas y permite aplicarlas por grupos.
 
 Por ejemplo, para obtener el promedio de edades de la tabla, basta ejecutar la siguiente consulta.
 
-```text
+```sas
 PROC SQL;
     CREATE TABLE ejemplo AS
     SELECT
@@ -200,7 +200,7 @@ Para conocer todas las funciones disponibles en el procedimiento SQL, consulte l
 
 Si se desea obtener subtotales, por ejemplo por sexo, se debe agregar la palabra clave `GROUP BY` despues de la cláusula `FROM`. Es importante poner la variable por la que se va agrupar en la sentencia `SELECT` y en `GROUP BY`.
 
-```text
+```sas
 PROC SQL;
     CREATE TABLE agegado AS
     SELECT
@@ -215,7 +215,7 @@ Es posible filtrar por agregado, para eso de debe poner `HAVING` y una condició
 
 El siguiente ejemplo muestra que edades son mayores a 100 libras.
 
-```text
+```sas
 PROC SQL;
     SELECT 
     age AS edad,
@@ -228,7 +228,7 @@ QUIT;
 
 Note que no podemos referirnos a la variable recien creada `peso_prom` en la sentencia `HAVING` por que no existe como tal esa variable en nuestra tabla. Si se desea hacer eso se puede anteponer la palabra `CALCULATED` al nombre de la variable recian creada. El resultado sería el siguiente:
 
-```text
+```sas
 PROC SQL;
     SELECT 
     age AS edad,
